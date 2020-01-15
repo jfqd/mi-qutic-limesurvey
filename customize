@@ -40,7 +40,7 @@ tar xf limesurvey${VERSION}.tar.gz
 rm limesurvey${VERSION}.tar.gz
 mv limesurvey limesurvey-${VERSION}
 
-echo "* Setup nextcloud"
+echo "* Setup limesurvey"
 cd $DESTDIR
 ln -nfs $DESTDIR/releases/limesurvey-${VERSION} current
 chown -R www:www "$DESTDIR"
@@ -74,6 +74,9 @@ ln -nfs /var/svc/log/pkgsrc-proxysql:default.log /var/log/proxysql_log
 
 # echo "* Enable ipfilter"
 # svcadm enable svc:/network/ipfilter:default
+
+echo "* Enable nullmailer"
+svcadm enable svc:/pkgsrc/nullmailer:default || true
 
 # Clean up
 echo "* Cleaning up."
