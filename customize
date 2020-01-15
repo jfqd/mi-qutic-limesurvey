@@ -43,6 +43,14 @@ mv limesurvey limesurvey-${VERSION}
 echo "* Setup limesurvey"
 cd $DESTDIR
 ln -nfs $DESTDIR/releases/limesurvey-${VERSION} current
+
+echo "* Install plugins"
+cd "${DESTDIR}/current/plugins"
+curl -s -L -O https://download.qutic.com/src/limesurvey/rootPageRedirect.zip
+unzip rootPageRedirect.zip
+rm -rf rootPageRedirect.zip
+
+echo "* Setup access rights"
 chown -R www:www "$DESTDIR"
 
 echo "* Change www for cronjobs"
@@ -71,9 +79,6 @@ chown root:proxysql /opt/local/etc/proxysql.cnf
 mv /opt/local/var/tmp/proxysql.xml /opt/local/lib/svc/manifest/proxysql.xml
 svccfg import /opt/local/lib/svc/manifest/proxysql.xml
 ln -nfs /var/svc/log/pkgsrc-proxysql:default.log /var/log/proxysql_log
-
-# echo "* Enable ipfilter"
-# svcadm enable svc:/network/ipfilter:default
 
 echo "* Enable nullmailer"
 svcadm enable svc:/pkgsrc/nullmailer:default || true
