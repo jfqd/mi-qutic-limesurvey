@@ -44,11 +44,12 @@ echo "* Setup limesurvey"
 cd $DESTDIR
 ln -nfs $DESTDIR/releases/limesurvey-${VERSION} current
 
-echo "* Install plugins"
-cd "${DESTDIR}/current/plugins"
-curl -s -L -O https://download.qutic.com/src/limesurvey/rootPageRedirect.zip
-unzip rootPageRedirect.zip
-rm -rf rootPageRedirect.zip
+# echo "* Install plugins"
+# cd "${DESTDIR}/current/plugins"
+# curl -s -L -O https://download.qutic.com/src/limesurvey/rootPageRedirect.zip
+# mkdir rootPageRedirect
+# unzip -d rootPageRedirect rootPageRedirect.zip || true
+# rm -rf rootPageRedirect.zip
 
 echo "* Setup access rights"
 chown -R www:www "$DESTDIR"
