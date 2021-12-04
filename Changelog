@@ -1,5 +1,13 @@
 # Changelog
 
+## 20201019.0
+
+* update limesurvey to 3.27.26+211123
+* add extentions for zabbix
+* remove nagios support
+* use php-74
+* use latest base image
+
 ## 20191127.0
 
 * First release
