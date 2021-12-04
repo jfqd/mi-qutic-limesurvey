@@ -45,6 +45,9 @@ echo "* Setup limesurvey"
 cd $DESTDIR
 ln -nfs $DESTDIR/releases/limesurvey-${VERSION} current
 
+cd current
+cp application/config/config-sample-mysql.php application/config/config.php
+
 # echo "* Install plugins"
 # cd "${DESTDIR}/current/plugins"
 # curl -s -L -O https://download.qutic.com/src/limesurvey/rootPageRedirect.zip
