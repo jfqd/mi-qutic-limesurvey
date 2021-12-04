@@ -5,7 +5,8 @@ PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
 # Exit if any command fail
 set -o errexit
 
-VERSION="3.21.4+200108"
+# 5.2.3+211122
+VERSION="3.27.26+211123"
 DESTDIR="/var/www/htdocs/limesurvey"
 
 MUNIN_PLUGINS="
@@ -35,9 +36,9 @@ done
 echo "* Install limesurvey"
 mkdir -p "${DESTDIR}/releases"
 cd "${DESTDIR}/releases"
-curl -s -L -O https://download.qutic.com/src/limesurvey/limesurvey${VERSION}.tar.gz
-tar xf limesurvey${VERSION}.tar.gz
-rm limesurvey${VERSION}.tar.gz
+curl -s -L -O https://download.qutic.com/src/limesurvey/limesurvey${VERSION}.zip
+unzip limesurvey${VERSION}.tar.gz
+rm limesurvey${VERSION}.zip
 mv limesurvey limesurvey-${VERSION}
 
 echo "* Setup limesurvey"
@@ -57,29 +58,12 @@ chown -R www:www "$DESTDIR"
 echo "* Change www for cronjobs"
 usermod -d "$DESTDIR" -s /usr/bin/bash www
 
-echo "* Activate munin plugins"
-/opt/qutic/bin/munin-node-plugins ${MUNIN_PLUGINS}
-
 # Configuring image specific packages
 echo "* Configuring image specific packages.";
 mkdir -p /var/log/httpd/old
 mkdir -p /opt/local/etc/httpd/ssl || true
 chmod 0640 /opt/local/etc/httpd/ssl
 ln -nfs /opt/local/etc/httpd/ssl /opt/local/etc/httpd/tls
-
-echo "* Setup proxysql";
-pkg_add https://download.qutic.com/extras/proxysql-1.4.7.tgz || true
-mkdir -p /opt/local/var/proxysql
-groupadd -g 130 proxysql
-useradd -m -s /usr/bin/false -d /opt/local/var/proxysql -u 130 -g proxysql proxysql
-chown proxysql:proxysql /opt/local/var/proxysql/
-mv /opt/local/etc/proxysql.cnf /opt/local/etc/proxysql.cnf.bak || true
-mv /opt/local/var/tmp/proxysql.cnf /opt/local/etc/proxysql.cnf
-chmod 0640 /opt/local/etc/proxysql.cnf
-chown root:proxysql /opt/local/etc/proxysql.cnf
-mv /opt/local/var/tmp/proxysql.xml /opt/local/lib/svc/manifest/proxysql.xml
-svccfg import /opt/local/lib/svc/manifest/proxysql.xml
-ln -nfs /var/svc/log/pkgsrc-proxysql:default.log /var/log/proxysql_log
 
 echo "* Enable nullmailer"
 svcadm enable svc:/pkgsrc/nullmailer:default || true
