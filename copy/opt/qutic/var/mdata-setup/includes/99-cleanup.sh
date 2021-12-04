@@ -7,6 +7,7 @@ mdata-delete mail_auth_pass || true
 mdata-delete mail_adminaddr || true
 mdata-delete admin_authorized_keys || true
 mdata-delete root_authorized_keys || true
-mdata-delete proxysql_admin_pwd || true
-mdata-delete proxysql_monitor_pwd || true
-mdata-delete proxysql_database_pwd || true
+mdata-delete mysql_host || true
+mdata-delete mysql_user || true
+mdata-delete mysql_database || true
+mdata-delete mysql_password || true
